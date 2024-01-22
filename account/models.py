@@ -139,7 +139,7 @@ class StudentProfile(models.Model):
 		return "@" + self.user.username
 	
 class TeacherProfile(models.Model):
-	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
+	user    = models.OneToOneField(Account, on_delete=models.SET_NULL, null=True)
 	dp = models.ImageField(upload_to='profileimages/', null=True)
 	school = models.ForeignKey(School, on_delete = models.SET_NULL, null=True)
 	
@@ -147,21 +147,21 @@ class TeacherProfile(models.Model):
 		return "@" + self.user.username
 	
 class MinisterProfile(models.Model):
-	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
+	user    = models.OneToOneField(Account, on_delete=models.SET_NULL, null=True)
 	dp = models.ImageField(upload_to='officeprofileimages/', null=True)
 	
 	def __str__(self):
 		return "@" + self.user.username
 
 class CommissionerProfile(models.Model):
-	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
+	user    = models.OneToOneField(Account, on_delete=models.SET_NULL, null=True)
 	dp = models.ImageField(upload_to='officeprofileimages/', null=True)
 	
 	def __str__(self):
 		return "@" + self.user.username
 	
 class FedralDistrictHeadProfile(models.Model):
-	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
+	user    = models.OneToOneField(Account, on_delete=models.SET_NULL, null=True)
 	dp = models.ImageField(upload_to='officeprofileimages/', null=True)
 	district = models.CharField(max_length=30, choices=DISTRICTFED)
 	
@@ -169,7 +169,7 @@ class FedralDistrictHeadProfile(models.Model):
 		return "@" + self.user.username
 	
 class StateDistrictHeadProfile(models.Model):
-	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
+	user    = models.OneToOneField(Account, on_delete=models.SET_NULL, null=True)
 	dp = models.ImageField(upload_to='officeprofileimages/', null=True)
 	
 	def __str__(self):
