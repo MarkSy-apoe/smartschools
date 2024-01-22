@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>Sign up as District head and await approval</p><br>
+<form method="POST">{% csrf_token %}
+    <label>First name: </label><br>
+    <input type="text" name="first_name" placeholder="e.g john" required><br><br>
+    <label>Last name: </label><br>
+    <input type="text" name="last_name" placeholder="e.g doe" required><br><br>
+    <label>Username: </label><br>
+    <input type="text" name="username" placeholder="your unique tag" required><br><br>
+    <label>Email: </label><br>
+    <input type="email" name="email" placeholder="e.g johndoe@example.com" required><br><br>
+    <label>Password: </label><br>
+    <input type="password" name="password1" placeholder="password" required><br><br>
+    <label>Confirm password: </label><br>
+    <input type="password" name="password2" placeholder="confirm password" required><br><br>
+    <input type="hidden" name="accounttype" value="fedraldistrict">
+
+    {% for field in registration_form %}
+        <p>
+        {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        </p>
+    {% endfor %}
+                    
+    {% if registration_form.non_field_errors %}
+        <div style="color: red">
+            <p>{{registration_form.non_field_errors}}</p>
+        </div>
+    {% endif %}
+    <br><br>
+
+    <button type="submit">Register</button>
+</form>
+{% endblock %}
