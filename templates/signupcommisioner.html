@@ -1,37 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Sign up as Commisioner and wait for minister approval</p><br>
-    <form method="POST">{% csrf_token %}
-        <label>First name: </label><br>
-        <input type="text" name="first_name" placeholder="e.g john" required><br><br>
-        <label>Last name: </label><br>
-        <input type="text" name="last_name" placeholder="e.g doe" required><br><br>
-        <label>Username: </label><br>
-        <input type="text" name="username" placeholder="your unique tag" required><br><br>
-        <label>Email: </label><br>
-        <input type="email" name="email" placeholder="e.g johndoe@example.com" required><br><br>
-        <label>Password: </label><br>
-        <input type="password" name="password1" placeholder="password" required><br><br>
-        <label>Confirm password: </label><br>
-        <input type="password" name="password2" placeholder="confirm password" required><br><br>
-        <input type="hidden" name="accounttype" value="commissioner">
+    <p class="text-center text-xl">Sign up as Commisioner and wait for minister approval</p><br>
 
-        {% for field in registration_form %}
-			<p>
-			{% for error in field.errors %}
-				<p style="color: red">{{ error }}</p>
-			{% endfor %}
-			</p>
-		{% endfor %}
-						
-		{% if registration_form.non_field_errors %}
-			<div style="color: red">
-			    <p>{{registration_form.non_field_errors}}</p>
-			</div>
-		{% endif %}
-		<br><br>
+    <div class="flex justify-center">
+        <form method="POST" class="mt-4">{% csrf_token %}
+            <label>First name: </label><br>
+            <input type="text" name="first_name" placeholder="e.g john" required class="border border-black mt-2 p-4"><br><br>
+            <label>Last name: </label><br>
+            <input type="text" name="last_name" placeholder="e.g doe" required class="border border-black mt-2 p-4"><br><br>
+            <label>Username: </label><br>
+            <input type="text" name="username" placeholder="your unique tag" required class="border border-black mt-2 p-4"><br><br>
+            <label>Email: </label><br>
+            <input type="email" name="email" placeholder="e.g johndoe@example.com" required class="border border-black mt-2 p-4"><br><br>
+            <label>Password: </label><br>
+            <input type="password" name="password1" placeholder="password" required class="border border-black mt-2 p-4"><br><br>
+            <label>Confirm password: </label><br>
+            <input type="password" name="password2" placeholder="confirm password" required class="border border-black mt-2 p-4"><br><br>
+            <input type="hidden" name="accounttype" value="commissioner">
 
-        <button type="submit">Register</button>
-    </form>
+            {% for field in registration_form %}
+                <p>
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+                </p>
+            {% endfor %}
+                            
+            {% if registration_form.non_field_errors %}
+                <div style="color: red">
+                    <p>{{registration_form.non_field_errors}}</p>
+                </div>
+            {% endif %}
+            <br><br>
+
+            <button type="submit" class="border-2 border-cyan-600 px-8 py-1 text-lg hover:bg-cyan-600 hover:text-white">Register</button>
+        </form>
+    </div><br>
 {% endblock %}

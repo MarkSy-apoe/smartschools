@@ -218,4 +218,11 @@ class OfficeofStateDistrictstaffProfile(models.Model):
 	
 	def __str__(self):
 		return "@" + self.user.username
+
+
+class Post(models.Model):
+	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
+	content = models.TextField()
+
+	
 	

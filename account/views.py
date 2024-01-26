@@ -8,13 +8,31 @@ from .forms import SignUpForm, AccountAuthenticationForm
 # Create your views here.
 def index(request):
     user = request.user
+    
     context={}
 
-    return render(request, "index.html")
+    if user.is_authenticated:
+        getposts = Post.objects.filter(user=user)
+        context['yourpost'] = getposts
+        if user.accounttype == 'ministerOE':
+            profile = MinisterProfile.objects.get(user=user)            
+            context['profile'] = profile
+        elif user.accounttype == 'commissioner':
+            profile = CommissionerProfile.objects.get(user=user)
+            context['profile'] = profile
+        elif user.accounttype == 'fedraldistrict':
+            profile = FedralDistrictHeadProfile.objects.get(user=user)
+            context['profile'] = profile
+        elif user.accounttype == 'statedistrict':
+            profile = StateDistrictHeadProfile.objects.get(user=user)
+            context['profile'] = profile
+        else:
+            pass
+
+    return render(request, "index.html", context)
 
 def getstarted(request):
     user = request.user
-    context ={}
 
     if user.is_authenticated:
         return redirect("index")
@@ -107,5 +125,19 @@ def signupFeddistrict(request):
             else:
                 context['registration_form'] = form
 
-    return render(request, "signup_feddistrict.html",context)
+    return render(request, "signup_feddistrict.html", context)
 
+
+def createpost(request):
+    user = request.user
+    context ={}
+
+    if user.is_authenticated:
+        if request.POST:
+            post = Post(user=user, content=request.POST.get("content"))
+            post.save()
+            return redirect("index")
+    else:
+        return redirect("index")
+    
+    return render(request, "createpost.html", context)

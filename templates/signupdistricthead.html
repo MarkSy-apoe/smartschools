@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <a href="{% url 'fedral-district' %}"><p>Fedral district head</p></a>
-    <a href="{% url 'state-district' %}"><p>State district head</p></a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-items-center mt-[15rem]">
+        <a href="{% url 'fedral-district' %}"><button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Fedral district head</button></a>
+        <a href="{% url 'state-district' %}"><button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">State district head</button></a>
+    </div>
 {% endblock %}

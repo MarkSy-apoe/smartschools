@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Get started</p>
-    <a href="{% url 'commisioner-join' %}"><p>Sign up as a Commisioner of education</p></a>
-    <a href="{%url 'district-join' %}"><p>Sign up as a District head</p></a>
-    <p>Sign up as School owner</p>
-    <p>Sign up as School admin</p>
-    <p>Sign up as Government Staff</p>
-    <p>Sign up as Teacher</p>
-    <p>Sign up as Student</p>
+    <p class="text-center text-xl">Get started. Who are you?</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center mt-8">
+        <a href="{% url 'commisioner-join' %}"><button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Commisioner of education</p></button></a>
+        <a href="{%url 'district-join' %}"><button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>District head</p></button></a>
+        <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>School owner</p></button>
+        <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>School admin</p></button>
+        <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Government Staff</p></button>
+        <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Teacher</p></button>
+        <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Student</p></button>
+    </div>
 {% endblock %}

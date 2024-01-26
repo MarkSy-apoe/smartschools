@@ -35,7 +35,7 @@
 				<a href="{% url 'get-started' %}"><p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Get started</p></a>
 				<a href="{% url 'login' %}"><p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Login</p></a>	
 			{% else %}		
-				<p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Logout</p>
+				<a href="{% url 'logout' %}"><p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Logout</p></a>
 			{% endif %}
 		</div>
 		<svg class="w-6 h-6 lg:hidden cursor-pointer text-black" id="open" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14" id='togglebutton'>
@@ -49,8 +49,12 @@
 			<p class='mt-8 cursor-pointer hover:text-cyan-800'>Community</p>
 			<p class='mt-8 cursor-pointer hover:text-cyan-800'>Explore</p>
 			<p class='mt-8 cursor-pointer hover:text-cyan-800'>Pricing</p>
-			<a href="{% url 'get-started' %}"><p class='mt-8 cursor-pointer hover:text-cyan-800'>Get started</p></a>
-			<a href="{% url 'login' %}"><p class='mt-8 cursor-pointer hover:text-cyan-800'>Login</p></a>
+			{% if user.is_authenticated == False %}
+				<a href="{% url 'get-started' %}"><p class='mt-8 cursor-pointer hover:text-cyan-800'>Get started</p></a>
+				<a href="{% url 'login' %}"><p class='mt-8 cursor-pointer hover:text-cyan-800'>Login</p></a>
+			{% else %}
+				<a href="{% url 'logout' %}"><p class='mt-8 cursor-pointer hover:text-cyan-800'>Logout</p></a>
+			{% endif %}
 		</div>
 	</div>
 	

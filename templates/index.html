@@ -1,12 +1,78 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <p>Index</p>
-        <p>Logged in as {{user.first_name}}</p>
-        <a href="{% url 'logout' %}">Logout</a>
+    {% if user.is_authenticated %}    
+        <p class="text-lg">Dashboard</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">                   
+        {% if user.accounttype == 'ministerOE' %}
+            <div> 
+                <p class="text-xl mt-4">Welcome Minister, {{user.first_name}} {{user.last_name}}</p>
+                <div class="grid grid-cols-2 mt-6">
+                    <a href="{% url 'create-post' %}"><button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Make a Post</button></a>
+                    <button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Edit Profile</button>
+                </div>
+                <p class="mt-20 text-xl">Recent Posts:</p>
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="grid grid-cols-1 justify-items-center">
+                <p class="text-xl mt-4 text-center">Administrative tools</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-8">
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                       <p class="text-center group-hover:animate-bounce">Manager commisioner roles</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Manage Schools</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Manage Syllabus</p>
+                    </div>
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Manage office</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Send office annoucements</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Create School</p>
+                    </div>
+                </div>
+            </div>
+        {% elif user.accounttype == 'commissioner' %}
+            <p class="text-xl mt-4">Welcome Commisioner, {{user.first_name}} {{user.last_name}}</p>
+            
+            {% if user.is_confirmed %}
+                <p>Controls</p>
+            {% else %}
+                <p class="text-center mt-24 text-2xl">You've not been confirmed as a commisioner</p>
+                <p class="mt-28 underline decoration-cyan-800 text-cyan-800 text-center text-lg cursor-pointer">Learn more</p>
+            {% endif %}
+        {% elif user.accounttype == 'fedraldistrict' %}
+            <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'statedistrict' %}
+            <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'officestaff' %}
+            <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'principal' %}
+            <p class="text-xl mt-4">Welcome Princial, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'schooladmin' %}
+            <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'schoolowner' %}
+            <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'teacher' %}
+            <p class="text-xl mt-4">Welcome Teacher, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'student' %}
+            <p class="text-xl mt-4">Welcome Student, {{user.first_name}} {{user.last_name}}</p>
+        {% else %}
+            <p class="text-xl mt-4">Unknown accountype</p>
+        {% endif %}
+    </div> <br> 
     {% else %}
-        <a href="{% url 'get-started' %}"><p>Sign up</p></a>
-        <a href="{% url 'login' %}"><p>Log in</p></a>
+        <p>landing page</p>
     {% endif %}
 {% endblock %}
