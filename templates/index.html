@@ -12,6 +12,22 @@
                     <button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Edit Profile</button>
                 </div>
                 <p class="mt-20 text-xl">Recent Posts:</p>
+                <div class="mt-8 grid grid-cols-1">
+                    {% for post in yourpost%}
+                        <div class="grid grid-cols-1">
+                            <div class="flex flex-row">
+                                <p class="font-semibold text-xl">{{user.first_name}} {{user.last_name}} || Minister</p>
+                            </div>
+                            <p class="mt-4">{{post.content}}</p>
+                            <div class="h-px w-full bg-gray-300 mt-4"></div>
+                            <div class="grid grid-cols-3 justify-items-center mt-4">
+                                <p>Like</p>
+                                <p>Comment</p>
+                                <p>Share</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
                 <br>
                 <br>
                 <br>

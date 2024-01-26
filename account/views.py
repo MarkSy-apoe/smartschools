@@ -12,10 +12,10 @@ def index(request):
     context={}
 
     if user.is_authenticated:
-        getposts = Post.objects.filter(user=user)
+        getposts = Post.objects.filter(user=user)[:5] 
         context['yourpost'] = getposts
         if user.accounttype == 'ministerOE':
-            profile = MinisterProfile.objects.get(user=user)            
+            profile = MinisterProfile.objects.get(user=user)          
             context['profile'] = profile
         elif user.accounttype == 'commissioner':
             profile = CommissionerProfile.objects.get(user=user)
@@ -141,3 +141,19 @@ def createpost(request):
         return redirect("index")
     
     return render(request, "createpost.html", context)
+
+
+def managecommissioner(request):
+    user = request.user
+    context ={}
+
+    if user.is_authenticated:
+        if user.accounttype == 'ministerOE':
+            commissioners = Account.objects.filter(is_confirmed=False)
+            context["toapprove"] = commissioners
+        else:
+            return redirect("index")
+    else:
+        return redirect("index")
+    
+    return render(request, "manage_comm.html", context)
