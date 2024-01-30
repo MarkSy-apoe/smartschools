@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p class="text-center">Commisioners awaiting approval. You can rest/remove <span class="underline decoration-cyan-800 text-cyan-800 cursor-pointer">commisioners here</span></p>
+<div class="mt-8 grid grid-cols-3">
+    {% for comm in toapprove %}
+    <div>
+        <p>{{comm.first_name}} {{comm.last_name}}</p>
+        <button class="border-2 border-cyan-600 px-8 py-1 text-lg hover:bg-cyan-600 hover:text-white mt-4">Approve</button>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

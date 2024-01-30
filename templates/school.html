@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.accounttype == 'principal' %}
+{% if profile.school %}
+<div class="w-full -mt-12 h-24 bg-white flex flex-row justify-center items-center text-black">
+    <div class='w-5/6 flex justify-center md:inline md:w-2/6'>
+        <a href="#"><h1 class='text-2xl md:text-xl lg:text-2xl tracking-wider cursor-pointer text-cyan-800'>{{school.name}}</h1></a>
+    </div>
+    <div class='md:w-4/6 -ml-8 hidden lg:flex flex-row justify-center items-center text-black'>
+        <a href="#"><p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Manage Staffs</p></a>
+        <p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Manage Students</p>
+        <p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Classes</p>
+        <p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Subjects</p>	
+        <a href="{{school.get_absolute_url}}"><p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>View School Profile</p></a>
+    </div>
+</div>
+
+<div class="lg:hidden mt-4 w-full flex items-center justify-center bg-white border border-cyan-600 py-8 rounded-md">
+    <div>
+        <p class='cursor-pointer hover:text-cyan-800'>Manage Staffs</p>
+        <p class='mt-8 cursor-pointer hover:text-cyan-800'>Manage Students</p>
+        <p class='mt-8 cursor-pointer hover:text-cyan-800'>Classes</p>
+        <p class='mt-8 cursor-pointer hover:text-cyan-800'>Subjects</p>
+        <a href="{{school.get_absolute_url}}"><p class='mt-8 cursor-pointer hover:text-cyan-800'>View School Profile</p></a>
+    </div>
+</div>
+
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="text-center">
+        <p class="text-2xl">School's name: {{school.name}}</p>
+        <div class="grid grid-cols-2 mt-12 text-lg">
+            <div>
+                <p>Vision:</p>
+                <p class="mt-2 break-words">{{school.vision}}</p>
+            </div>
+            <div>
+                <p>Mission:</p>
+                <p class="mt-2 break-words">{{school.mission}}</p>
+            </div>
+        </div>  
+        <div class="grid grid-cols-1 justify-items-center mt-12">
+            <button class="border-2 border-cyan-600 px-8 py-1 text-lg hover:bg-cyan-600 hover:text-white">Edit School's Profile</button>
+        </div>  
+
+        <p class="mt-20 text-2xl">School reputation</p>
+        {% if school.is_approved %}
+            <p class="text-green-700 text-lg mt-2">Your school has been approved</p>
+        {% else %}
+            <p class="text-red-700 text-lg mt-2">Your school hasn't been approved, <a href="#" class="underline">apply here</a></p>
+        {% endif %}
+        {% if school.schoolLvl == 'secondary' or school.schoolLvl == 'juniorseconadary' or school.schoolLvl == 'seniorsecondary' %}
+            {% if school.is_waecaccredited %}
+                <p class="text-green-700 text-lg mt-2">Your school is waec accredited</p>
+            {% else %}
+                <p class="text-red-700 text-lg mt-2">Your school is not waec accredited, <a href="#" class="underline">apply here</a></p>
+            {% endif %}
+        {% endif %}
+        {% if school.is_suspended %}
+            <p class="text-red-700 text-lg mt-2">Your school has been suspended, <a href="#" class="underline">Learn more</a></p>
+        {% else %}
+            <p class="text-green-700 text-lg mt-2">Your school is not suspended</p>
+        {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 justify-items-center mt-24 md:mt-0">
+        <p class="text-xl text-center">Administrative tools</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-8">
+            <a href="{% url 'manage-comissioners' %}"><div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+              <p class="text-center group-hover:animate-bounce">Create announcement</p>
+            </div>
+            </a>
+
+            <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                <p class="text-center group-hover:animate-bounce">School office</p>
+            </div>
+
+            <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                <p class="text-center group-hover:animate-bounce">Manage Syllabus</p>
+            </div>
+            <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                <p class="text-center group-hover:animate-bounce">Activities</p>
+            </div>
+
+            <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                <p class="text-center group-hover:animate-bounce">School settings</p>
+            </div>
+
+            <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                <p class="text-center group-hover:animate-bounce">Statistics and overview</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<p class="text-center mt-[10rem]">You do not have a school yet, <a href="{% url 'create-school' %}" class="text-cyan-800 underline decoration-cyan-800">create one here</a></p>
+{% endif %}
+
+{% elif user.accounttype == 'student' %}
+    {% if profile.school %}
+
+    {% else %}
+        <p class="text-center mt-[10rem]">You are not enrolled in a school yet</p>
+    {% endif %}
+
+{% endif %}
+    
+
+{% endblock %}

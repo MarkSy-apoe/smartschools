@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
 from .models import *
 from account.models import *
-from .forms import SignUpForm, AccountAuthenticationForm
+from .forms import SignUpForm, AccountAuthenticationForm, SchoolForm
 
 # Create your views here.
 def index(request):
@@ -25,6 +25,9 @@ def index(request):
             context['profile'] = profile
         elif user.accounttype == 'statedistrict':
             profile = StateDistrictHeadProfile.objects.get(user=user)
+            context['profile'] = profile
+        elif user.accounttype == 'principal':
+            profile = PrincipalProfile.objects.get(user=user)
             context['profile'] = profile
         else:
             pass
@@ -73,13 +76,51 @@ def signupCommisioner(request):
         if request.POST:
             form = SignUpForm(request.POST)
             if form.is_valid():
-                CommissionerProfile.objects.create(user=form.save())
+                CommissionerProfile.objects.create(state=request.POST.get("state"), user=form.save())
                 form.save()
                 return redirect("login")
             else:
                 context['registration_form'] = form
 
     return render(request, "signupcommisioner.html",context)
+
+
+def principalsignup(request):
+    user = request.user
+    context ={}
+
+    if user.is_authenticated:
+        return redirect("index")
+    else:
+        if request.POST:
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                PrincipalProfile.objects.create(user=form.save())
+                form.save()
+                return redirect("login")
+            else:
+                context['registration_form'] = form
+
+    return render(request, "principalsignup.html",context)
+
+
+def studentsignup(request):
+    user = request.user
+    context ={}
+
+    if user.is_authenticated:
+        return redirect("index")
+    else:
+        if request.POST:
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                StudentProfile.objects.create(user=form.save())
+                form.save()
+                return redirect("login")
+            else:
+                context['registration_form'] = form
+
+    return render(request, "studentsignup.html",context)
 
 
 def signupDistricthead(request):
@@ -126,6 +167,79 @@ def signupFeddistrict(request):
                 context['registration_form'] = form
 
     return render(request, "signup_feddistrict.html", context)
+
+def createschool(request):
+    user = request.user
+    context={}
+
+    if user.accounttype == 'principal':
+        profile = PrincipalProfile.objects.get(user=user)
+        if profile.school:
+            return redirect("school")
+        
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    else:
+        if request.POST:
+            form = SchoolForm(request.POST)
+            if form.is_valid():
+                if user.accounttype == 'principal':
+                    profile = PrincipalProfile.objects.get(user=user)
+                    profile.school = form.save()
+                    profile.save()
+                    return redirect("school")
+                else:
+                    School.objects.create(form.save())
+                    return redirect("school")
+            else:
+                context['schoolform'] = form
+
+    return render(request, "createschool.html", context)
+
+def school(request):
+    user = request.user
+    context ={}
+
+    if user.is_authenticated:
+        if user.accounttype == 'principal':
+            profile = PrincipalProfile.objects.get(user=user)  
+            context['profile'] = profile          
+            if profile.school:
+                school = profile.school
+                context['school'] = school
+        elif user.accounttype == 'ministerOE':
+            profile = MinisterProfile.objects.get(user=user)  
+            context['profile'] = profile          
+            school = School.objects.filter(has_principal = False).order_by('-joined')
+            context['school'] = school
+        elif user.accounttype == 'commissioner':
+            profile = CommissionerProfile.objects.get(user=user)  
+            context['profile'] = profile          
+            school = School.objects.filter(has_principal = False, state=profile.state).order_by('-joined')
+            context['school'] = school
+        elif user.accounttype == 'student':
+            profile = StudentProfile.objects.get(user=user)  
+            context['profile'] = profile
+            if profile.school:
+                school = profile.school
+                context['school'] = school
+        else:
+            return redirect("index")
+    else:
+        return redirect("index")
+    
+    return render(request, "school.html", context)
+
+def schoolprofile(request, pk):
+    user = request.user
+    school = School.objects.get(slug=pk)
+
+    context = {
+        'school': school,
+    }
+
+    return render(request, "schoolprofile.html", context)
 
 
 def createpost(request):

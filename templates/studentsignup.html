@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p class="text-center text-xl">Sign up as Commisioner and wait for minister approval</p><br>
+    <p class="text-center text-xl">Sign up as Student</p><br>
 
     <div class="flex justify-center">
         <form method="POST" class="mt-4">{% csrf_token %}
@@ -17,12 +17,7 @@
             <input type="password" name="password1" placeholder="password" required class="border border-black mt-2 p-4"><br><br>
             <label>Confirm password: </label><br>
             <input type="password" name="password2" placeholder="confirm password" required class="border border-black mt-2 p-4"><br><br>
-            <label>State: </label><br>
-            <section name="state" required class="border border-black mt-2 p-4">
-                <option value="lagos">Lagos</option>
-                <option value="abuja">Abuja</option>
-            </section><br><br>
-            <input type="hidden" name="accounttype" value="commissioner">
+            <input type="hidden" name="accounttype" value="student">
 
             {% for field in registration_form %}
                 <p>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<img src="{{ school.img.url }}">
+
+<p class="text-center text-3xl">{{school.name}}</p>
+<div class="grid grid-cols-1 justify-items-center mt-24">
+    {% if user.is_authenticated %}
+        {% if user.accounttype == 'student' %}
+            <button class="border-2 border-cyan-600 px-4 w-[10rem] h-12 text-lg hover:bg-cyan-600 hover:text-white">Enroll/apply</button>
+        {% else %}
+            <button class="border-2 border-cyan-600 px-4 w-[10rem] h-12 text-lg hover:bg-cyan-600 hover:text-white">Contact</button>
+        {% endif %}
+    {% else %}
+        <button class="border-2 border-cyan-600 px-4 w-[10rem] h-12 text-lg hover:bg-cyan-600 hover:text-white">Contact</button>
+    {% endif %}
+    
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 justify-items-center mt-24 text-lg gap-8">
+    <p>Our vision<br>{{school.vision}}</p>
+    <p>Our mission<br>{{school.mission}}</p>
+</div>
+
+{% endblock %}

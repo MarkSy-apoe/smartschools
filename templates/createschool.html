@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p class="text-center text-xl">Create School</p><br>
+
+    {% if user.accounttype == 'ministerOE' or user.accounttype == 'commissioner' or user.accounttype == 'principal' %}
+        <div class="flex justify-center">
+            <form method="POST" class="mt-4">{% csrf_token %}
+                <label>School name: </label><br>
+                <input type="text" name="name" placeholder="e.g Command public school" required class="border border-black mt-2 p-4"><br><br>
+                <label>Vision: </label><br>
+                <textarea type="text" name="vision" placeholder="your school's vision..." required class="border border-black mt-2 p-4"></textarea><br><br>
+                <label>Mission: </label><br>
+                <textarea type="text" name="mission" placeholder="your school's mission" required class="border border-black mt-2 p-4"></textarea><br><br>
+                <label>School Level: </label><br>
+                <select name="schoolLvl" class="border border-black mt-2 p-4" required>
+                    <option value="primary">Elementary School</option>
+                    <option value="secondary">Secondary School</option>
+                    <option value="juniorsecondary">Junior Secondary</option>
+                    <option value="seniorsecondary">Senior Secondary</option>
+                    <option value="poly">Polytechnic</option>
+                    <option value="uni">University</option>
+                </select><br><br>
+                <label>School Type: </label><br>
+                <select name="schoolGov" class="border border-black mt-2 p-4" required>
+                    <option value="fedral">Fedral School</option>
+                    <option value="state">State School</option>
+                    <option value="private">Private Secondary</option>
+                </select><br><br>
+                
+                <label>State: </label><br>
+                <select name="state" class="border border-black mt-2 p-4" required>
+                    <option value="lagos">Lagos State</option>
+                    <option value="abuja">Abuja State</option>
+                </select><br><br>
+
+                <input type="checkbox" name="has_principal" required><label>Create School</label>
+                
+
+                {% for field in schoolform %}
+                    <p>
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                    </p>
+                {% endfor %}
+                                
+                {% if schoolform.non_field_errors %}
+                    <div style="color: red">
+                        <p>{{schoolform.non_field_errors}}</p>
+                    </div>
+                {% endif %}
+                <br><br>
+
+                <button type="submit" class="border-2 border-cyan-600 px-8 py-1 text-lg hover:bg-cyan-600 hover:text-white">Register</button>
+            </form>
+        </div><br>
+    {% else %}
+        <p class="text-center text-lg mt-20">You can't create a school</p>
+    {% endif %}
+{% endblock %}

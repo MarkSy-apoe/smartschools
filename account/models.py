@@ -1,8 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.template.defaultfilters import slugify
 from django.urls import reverse
 
 # Create your models here.
+STATE = (
+	("lagos", "Lagos"),
+	("abuja", "Abuja"),
+)
+
 ACC_TYPE =(
 	("ministerOE", "Minister of education"),
 	("commissioner", "Commissioners"),
@@ -108,27 +114,40 @@ class Account(AbstractBaseUser):
 	def has_module_perms(self, app_label):
 		return True
 	
-class PrincipalProfile(models.Model):
-    user    = models.OneToOneField(Account, on_delete=models.CASCADE)
-    dp = models.ImageField(upload_to='profileimages/', null=True)
-	
-    def __str__(self):
-        return "@" + self.user.username
 	
 class School(models.Model):
-    schoolcrest = models.ImageField(upload_to='schoolcrest/', null=True)
-    name        = models.CharField(max_length=70, unique=True)
-    vision      = models.TextField()
-    mission     = models.TextField()
-    is_approved = models.BooleanField(default=False)
-    is_waecaccredited = models.BooleanField(default=False)
-    is_suspended = models.BooleanField(default=False)
-    schoolLvl   = models.CharField(max_length=30, choices=SCHOOL_LVL)
-    schoolGov   = models.CharField(max_length=30, choices=SCHOOL_GOV)
-    principal   = models.OneToOneField(PrincipalProfile, on_delete=models.SET_NULL, null=True)
+	schoolcrest = models.ImageField(upload_to='schoolcrest/', null=True)
+	name        = models.CharField(max_length=70, unique=True)
+	vision      = models.TextField()
+	mission     = models.TextField()
+	is_approved = models.BooleanField(default=False)
+	is_waecaccredited = models.BooleanField(default=False)
+	is_suspended = models.BooleanField(default=False)
+	has_principal = models.BooleanField(default=False)
+	joined		= models.DateTimeField(verbose_name="date joined", auto_now_add=True)
+	state       = models.CharField(max_length=30, choices=STATE, null = True)
+	schoolLvl   = models.CharField(max_length=30, choices=SCHOOL_LVL)
+	schoolGov   = models.CharField(max_length=30, choices=SCHOOL_GOV)
+	slug		= models.SlugField(null=True, unique=True)
 	
-    def __str__(self):
-        return self.name
+	def __str__(self):
+		return self.name
+	
+	def get_absolute_url(self):
+		return reverse("schoolprofile", kwargs={"pk": self.slug})
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.name)
+		return super().save(*args, **kwargs)
+	
+class PrincipalProfile(models.Model):
+	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
+	dp = models.ImageField(upload_to='profileimages/', null=True)
+	school   = models.OneToOneField(School, on_delete=models.SET_NULL, null=True)
+	
+	def __str__(self):
+		return "@" + self.user.username
 
 class StudentProfile(models.Model):
 	user    = models.OneToOneField(Account, on_delete=models.CASCADE)
@@ -156,6 +175,7 @@ class MinisterProfile(models.Model):
 class CommissionerProfile(models.Model):
 	user    = models.OneToOneField(Account, on_delete=models.SET_NULL, null=True)
 	dp = models.ImageField(upload_to='officeprofileimages/', null=True)
+	state   = models.CharField(max_length=30, choices=STATE, null =True)
 	
 	def __str__(self):
 		return "@" + self.user.username

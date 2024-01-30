@@ -35,9 +35,10 @@
             <div class="grid grid-cols-1 justify-items-center">
                 <p class="text-xl mt-4 text-center">Administrative tools</p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-8">
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                       <p class="text-center group-hover:animate-bounce">Manager commisioner roles</p>
+                    <a href="{% url 'manage-comissioners' %}"><div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                      <p class="text-center group-hover:animate-bounce">Manager commisioner roles</p>
                     </div>
+                    </a>
 
                     <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
                         <p class="text-center group-hover:animate-bounce">Manage Schools</p>
@@ -61,12 +62,17 @@
             </div>
         {% elif user.accounttype == 'commissioner' %}
             <p class="text-xl mt-4">Welcome Commisioner, {{user.first_name}} {{user.last_name}}</p>
-            
-            {% if user.is_confirmed %}
-                <p>Controls</p>
+
+            {% if user.is_approved %}            
+                {% if user.is_confirmed %}
+                    <p>Controls</p>
+                {% else %}
+                    <p class="text-center mt-24 text-2xl">You've not been confirmed as a commisioner</p>
+                    <p class="mt-28 underline decoration-cyan-800 text-cyan-800 text-center text-lg cursor-pointer">Learn more</p>
+                {% endif %}
             {% else %}
-                <p class="text-center mt-24 text-2xl">You've not been confirmed as a commisioner</p>
-                <p class="mt-28 underline decoration-cyan-800 text-cyan-800 text-center text-lg cursor-pointer">Learn more</p>
+                <p class="text-center mt-24 text-2xl">You've not confirmed you email</p>
+                <p class="mt-28 underline decoration-cyan-800 text-cyan-800 text-center text-lg cursor-pointer">Do it here</p>
             {% endif %}
         {% elif user.accounttype == 'fedraldistrict' %}
             <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
@@ -75,10 +81,59 @@
         {% elif user.accounttype == 'officestaff' %}
             <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
         {% elif user.accounttype == 'principal' %}
-            <p class="text-xl mt-4">Welcome Princial, {{user.first_name}} {{user.last_name}}</p>
+            <div>
+                <p class="text-xl mt-4">Welcome Princial, {{user.first_name}} {{user.last_name}}</p>
+                <div class="grid grid-cols-2 mt-6">
+                    <a href="{% url 'create-post' %}"><button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Make a Post</button></a>
+                    <button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Edit Profile</button>
+                </div>
+                <p class="mt-20 text-xl">Recent Posts:</p>
+                <div class="mt-8 grid grid-cols-1">
+                    {% for post in yourpost%}
+                        <div class="grid grid-cols-1">
+                            <div class="flex flex-row">
+                                <p class="font-semibold text-xl">{{user.first_name}} {{user.last_name}} || Minister</p>
+                            </div>
+                            <p class="mt-4">{{post.content}}</p>
+                            <div class="h-px w-full bg-gray-300 mt-4"></div>
+                            <div class="grid grid-cols-3 justify-items-center mt-4">
+                                <p>Like</p>
+                                <p>Comment</p>
+                                <p>Share</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="grid grid-cols-1 justify-items-center">
+                <p class="text-xl mt-4 text-center">Administrative tools</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-8">
+                    {% if profile.school %}
+                        <a href="{% url 'school' %}"><div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Manage School</p>
+                        </div>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'create-school' %}"><div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Create School</p>
+                        </div>
+                        </a>
+                    {% endif %}
+
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Send office annoucements</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Help</p>
+                    </div>
+                </div>
+            </div>
+
         {% elif user.accounttype == 'schooladmin' %}
-            <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
-        {% elif user.accounttype == 'schoolowner' %}
             <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
         {% elif user.accounttype == 'teacher' %}
             <p class="text-xl mt-4">Welcome Teacher, {{user.first_name}} {{user.last_name}}</p>
