@@ -1,0 +1,1 @@
+web: gunicorn smartschooldemo.wsgi --log file--
