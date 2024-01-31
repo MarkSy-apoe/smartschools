@@ -1,79 +1,162 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if user.is_authenticated %}    
-        <p class="text-lg">Dashboard</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">                   
+    {% if user.is_authenticated %}                  
         {% if user.accounttype == 'ministerOE' %}
-            <div> 
-                <p class="text-xl mt-4">Welcome Minister, {{user.first_name}} {{user.last_name}}</p>
-                <div class="grid grid-cols-2 mt-6">
-                    <a href="{% url 'create-post' %}"><button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Make a Post</button></a>
-                    <button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Edit Profile</button>
-                </div>
-                <p class="mt-20 text-xl">Recent Posts:</p>
-                <div class="mt-8 grid grid-cols-1">
-                    {% for post in yourpost%}
-                        <div class="grid grid-cols-1">
-                            <div class="flex flex-row">
-                                <p class="font-semibold text-xl">{{user.first_name}} {{user.last_name}} || Minister</p>
-                            </div>
-                            <p class="mt-4">{{post.content}}</p>
-                            <div class="h-px w-full bg-gray-300 mt-4"></div>
-                            <div class="grid grid-cols-3 justify-items-center mt-4">
-                                <p>Like</p>
-                                <p>Comment</p>
-                                <p>Share</p>
+            <div class="grid grid-cols-5 gap-8">
+            <div class="h-[23rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
+
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Check Office</p></button>                                       
+    
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Commisioners</p></button>
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Fedral District Heads</p></button>
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Schools</p></button>              
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
+            </div>
+            <div class="col-span-2 justify-items-center">
+                <div class="py-2 bg-white">
+                    <p class="text-lg mt-4 text-center">Welcome Minister, {{user.first_name}} {{user.last_name}}</p>
+                    <div class="mt-8 flex flex-row justify-center">
+                        <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
+                        <button class="rounded-md h-12 px-4 ml-6 border border-gray-400 hover:bg-cyan-600 hover:text-white">Post</button>
+                    </div>
+                </div><br>
+
+                {% for post in posts %}
+                    <div class="py-2 bg-white">
+                        <div class="grid grid-cols-3 gap-4">
+                            <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
+                            <div class="col-start-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
-                <br>
-                <br>
-                <br>
+                        <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
+                        <p class="mt-8 ml-6">{{post.content}}</p>
+                        <div class="w-full bg-gray-400 h-px mt-4"></div>
+                        <div class="grid grid-cols-3 justify-items-center mt-2">
+                            <button>Like</button>
+                            <button>Comment</button>
+                            <button>Share</button>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="grid grid-cols-1 justify-items-center">
-                <p class="text-xl mt-4 text-center">Administrative tools</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-8">
-                    <a href="{% url 'manage-comissioners' %}"><div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                      <p class="text-center group-hover:animate-bounce">Manager commisioner roles</p>
+            <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
+                <p class="text-lg text-center mt-8">Admin Tools</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
+                    <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                    <p class="text-center group-hover:animate-bounce">See management history</p>
                     </div>
                     </a>
 
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Manage Schools</p>
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Send office notice</p>
                     </div>
 
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Manage Syllabus</p>
-                    </div>
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Manage office</p>
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Policies</p>
                     </div>
 
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Send office annoucements</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Create School</p>
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Your Profile</p>
                     </div>
                 </div>
+
+                <p class="mt-12 text-lg">Office Meta:</p>
+                <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Staff Count:</p>
+                        <p>0</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Commisioner Count:</p>
+                        <p>0</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>District head count:</p>
+                        <p>0</p>
+                    </div>
+                </div><br>
+            </div>                
             </div>
         {% elif user.accounttype == 'commissioner' %}
-            <p class="text-xl mt-4">Welcome Commisioner, {{user.first_name}} {{user.last_name}}</p>
+        <div class="grid grid-cols-5 gap-8">
+            <div class="h-[23rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
 
-            {% if user.is_approved %}            
-                {% if user.is_confirmed %}
-                    <p>Controls</p>
-                {% else %}
-                    <p class="text-center mt-24 text-2xl">You've not been confirmed as a commisioner</p>
-                    <p class="mt-28 underline decoration-cyan-800 text-cyan-800 text-center text-lg cursor-pointer">Learn more</p>
-                {% endif %}
-            {% else %}
-                <p class="text-center mt-24 text-2xl">You've not confirmed you email</p>
-                <p class="mt-28 underline decoration-cyan-800 text-cyan-800 text-center text-lg cursor-pointer">Do it here</p>
-            {% endif %}
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Check Office</p></button>                                       
+    
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage State District Heads</p></button>
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage State Schools</p></button>           
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
+            </div>
+            <div class="col-span-2 justify-items-center">
+                <div class="py-2 bg-white">
+                    <p class="text-lg mt-4 text-center">Welcome {{profile.state}}  State Commisioner, {{user.first_name}} {{user.last_name}}</p>
+                    <div class="mt-8 flex flex-row justify-center">
+                        <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
+                        <button class="rounded-md h-12 px-4 ml-6 border border-gray-400 hover:bg-cyan-600 hover:text-white">Post</button>
+                    </div>
+                </div><br>
+
+                {% for post in posts %}
+                    <div class="py-2 bg-white">
+                        <div class="grid grid-cols-3 gap-4">
+                            <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
+                            <div class="col-start-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                            </div>
+                        </div>
+                        <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
+                        <p class="mt-8 ml-6">{{post.content}}</p>
+                        <div class="w-full bg-gray-400 h-px mt-4"></div>
+                        <div class="grid grid-cols-3 justify-items-center mt-2">
+                            <button>Like</button>
+                            <button>Comment</button>
+                            <button>Share</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
+                <p class="text-lg text-center mt-8">Admin Tools</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
+                    <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                    <p class="text-center group-hover:animate-bounce">See management history</p>
+                    </div>
+                    </a>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Send office notice</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Policies</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Your Profile</p>
+                    </div>
+                </div>
+
+                <p class="mt-12 text-lg">Office Meta:</p>
+                <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Staff Count:</p>
+                        <p>0</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Commisioner Count:</p>
+                        <p>0</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>District head count:</p>
+                        <p>0</p>
+                    </div>
+                </div><br>
+            </div>                
+            </div>
         {% elif user.accounttype == 'fedraldistrict' %}
             <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
         {% elif user.accounttype == 'statedistrict' %}
@@ -81,68 +164,218 @@
         {% elif user.accounttype == 'officestaff' %}
             <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
         {% elif user.accounttype == 'principal' %}
-            <div>
-                <p class="text-xl mt-4">Welcome Princial, {{user.first_name}} {{user.last_name}}</p>
-                <div class="grid grid-cols-2 mt-6">
-                    <a href="{% url 'create-post' %}"><button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Make a Post</button></a>
-                    <button class="border-2 border-cyan-600 px-4 h-10 w-[10rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md">Edit Profile</button>
-                </div>
-                <p class="mt-20 text-xl">Recent Posts:</p>
-                <div class="mt-8 grid grid-cols-1">
-                    {% for post in yourpost%}
-                        <div class="grid grid-cols-1">
-                            <div class="flex flex-row">
-                                <p class="font-semibold text-xl">{{user.first_name}} {{user.last_name}} || Minister</p>
-                            </div>
-                            <p class="mt-4">{{post.content}}</p>
-                            <div class="h-px w-full bg-gray-300 mt-4"></div>
-                            <div class="grid grid-cols-3 justify-items-center mt-4">
-                                <p>Like</p>
-                                <p>Comment</p>
-                                <p>Share</p>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <br>
-                <br>
-                <br>
+        <div class="grid grid-cols-5 gap-8">
+            <div class="h-[30rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
+
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Check applications</p></button>                                       
+               
+                {% if school.schoolLvl == 'uni' or school.schoolLvl == 'poly' %}
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Courses</p></button>
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Departments</p></button>
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Merge Departments and Courses</p></button>
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Lecturers</p></button>
+                {% else %}  
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Class</p></button>
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Subjects</p></button> 
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Merge Classes and Subjects</p></button> 
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Assign Teachers</p></button>
+                {% endif %}                  
+                
+
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Promotion/Demotion</p></button>
+
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Student grades</p></button>
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>View Parents</p></button>
+                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
             </div>
-            <div class="grid grid-cols-1 justify-items-center">
-                <p class="text-xl mt-4 text-center">Administrative tools</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-8">
-                    {% if profile.school %}
-                        <a href="{% url 'school' %}"><div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Manage School</p>
+            <div class="col-span-2 justify-items-center">
+                <div class="py-2 bg-white">
+                    <p class="text-2xl text-center">{{school.name}}</p>
+                    <p class="text-lg mt-4 text-center">Welcome Principal, {{user.first_name}} {{user.last_name}}</p>
+                    <div class="mt-8 flex flex-row justify-center">
+                        <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
+                        <button class="rounded-md h-12 px-4 ml-6 border border-gray-400 hover:bg-cyan-600 hover:text-white">Post</button>
+                    </div>
+                </div><br>
+
+                {% for post in posts %}
+                    <div class="py-2 bg-white">
+                        <div class="grid grid-cols-3 gap-4">
+                            <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
+                            <div class="col-start-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                            </div>
                         </div>
-                        </a>
+                        <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
+                        <p class="mt-8 ml-6">{{post.content}}</p>
+                        <div class="w-full bg-gray-400 h-px mt-4"></div>
+                        <div class="grid grid-cols-3 justify-items-center mt-2">
+                            <button>Like</button>
+                            <button>Comment</button>
+                            <button>Share</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
+                <p class="text-lg text-center mt-2">Your School's reputation:</p>
+                {% if school.is_approved %}
+                    <p class="text-green-700 mt-2">Your school has been approved</p>
+                {% else %}
+                    <p class="text-red-700 mt-2">Your school hasn't been approved, <a href="#" class="underline">apply here</a></p>
+                {% endif %}
+                {% if school.schoolLvl == 'secondary' or school.schoolLvl == 'juniorseconadary' or school.schoolLvl == 'seniorsecondary' %}
+                    {% if school.is_waecaccredited %}
+                        <p class="text-green-700 mt-2">Your school is waec accredited</p>
                     {% else %}
-                        <a href="{% url 'create-school' %}"><div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Create School</p>
-                        </div>
-                        </a>
+                        <p class="text-red-700 mt-2">Your school is not waec accredited, <a href="#" class="underline">apply here</a></p>
                     {% endif %}
+                {% endif %}
+                {% if school.is_suspended %}
+                    <p class="text-red-700 mt-2">Your school has been suspended, <a href="#" class="underline">Learn more</a></p>
+                {% else %}
+                    <p class="text-green-700 mt-2">Your school is not suspended</p>
+                {% endif %}
 
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Send office annoucements</p>
+                <p class="text-lg text-center mt-8">Admin Tools</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
+                    <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                    <p class="text-center group-hover:animate-bounce">Manage Students</p>
+                    </div>
+                    </a>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Manage Teachers</p>
                     </div>
 
-                    <div class="grid grid-cols-1 w-[15rem] h-[12rem] text-lg border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Help</p>
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Other Staffs</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Your School's Profile</p>
                     </div>
                 </div>
-            </div>
+
+                <p class="mt-12 text-lg">School's Meta:</p>
+                <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Mission:</p>
+                        <p>{{school.mission}}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Vision:</p>
+                        <p>{{school.vision}}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Student count:</p>
+                        <p>100</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Teacher count:</p>
+                        <p>50</p>
+                    </div>
+                </div><br>
+            </div>                
+        </div>
 
         {% elif user.accounttype == 'schooladmin' %}
             <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
         {% elif user.accounttype == 'teacher' %}
             <p class="text-xl mt-4">Welcome Teacher, {{user.first_name}} {{user.last_name}}</p>
         {% elif user.accounttype == 'student' %}
-            <p class="text-xl mt-4">Welcome Student, {{user.first_name}} {{user.last_name}}</p>
+            <div class="grid grid-cols-5 gap-8">
+                <div class="h-[20rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
+
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Timetable</p></button>                                       
+                   
+                    {% if school.schoolLvl == 'uni' or school.schoolLvl == 'poly' %}
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My Department</p></button>
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My courses</p></button>
+                    {% else %}  
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My Class</p></button>
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My subjects</p></button>  
+                    {% endif %}                  
+                    
+
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Library</p></button>
+
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Results</p></button>
+                </div>
+                <div class="col-span-2 justify-items-center">
+                    <div class="py-2 bg-white">
+                        <p class="text-2xl text-center">{{school.name}}</p>
+                        <p class="text-lg mt-4 text-center">Welcome Student, {{user.first_name}} {{user.last_name}}</p>
+                    </div><br>
+
+                    {% for post in posts %}
+                        <div class="py-2 bg-white">
+                            <div class="grid grid-cols-3 gap-4">
+                                <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
+                                <div class="col-start-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                                </div>
+                            </div>
+                            <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
+                            <p class="mt-8 ml-6">{{post.content}}</p>
+                            <div class="w-full bg-gray-400 h-px mt-4"></div>
+                            <div class="grid grid-cols-3 justify-items-center mt-2">
+                                <button>Like</button>
+                                <button>Comment</button>
+                                <button>Share</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
+                    <p class="text-lg text-center mt-2">Your Avg grade: 90%</p>
+                    <p class="text-lg text-center mt-8">Student Tools</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
+                        <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">View your grade</p>
+                        </div>
+                        </a>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Assignments</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Materials</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Your School</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-12 text-lg">Today's classes:</p>
+                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Mathematics</p>
+                            <p>By 8:00am</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Civic education</p>
+                            <p>By 8:55am</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Biology</p>
+                            <p>By 9:45am</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>English</p>
+                            <p>By 10:30am</p>
+                        </div>
+                    </div><br>
+                </div>                
+            </div>
+            
         {% else %}
             <p class="text-xl mt-4">Unknown accountype</p>
-        {% endif %}
-    </div> <br> 
+        {% endif %} <br> 
     {% else %}
         <p>landing page</p>
     {% endif %}

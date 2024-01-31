@@ -98,7 +98,62 @@
 
 {% elif user.accounttype == 'student' %}
     {% if profile.school %}
+        <p class="text-2xl">My school: {{school.name}}</p>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <p class="text-xl text-center">Class- SS1b</p>
+                <p class="mt-4 text-lg">Recent Materials:</p>
+                <p class="text-center mt-2">None</p>
+                <p class="mt-12 text-lg">Today's classes:</p>
+                <div class="grid grid-cols-1 border border-cyan-600 py-4 gap-4 mt-2 justify-items-center">
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Mathematics</p>
+                        <p>By 8:00am</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Civic education</p>
+                        <p>By 8:55am</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>Biology</p>
+                        <p>By 9:45am</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12">
+                        <p>English</p>
+                        <p>By 10:30am</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 justify-items-center mt-24 md:mt-0">
+                <p class="text-xl text-center">Student Tools</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-8">
+                    <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[7rem] border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                    <p class="text-center group-hover:animate-bounce">Enter Class</p>
+                    </div>
+                    </a>
 
+                    <div class="grid grid-cols-1 w-[10rem] h-[7rem] border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">See Your subjects/courses</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[7rem] border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Result history</p>
+                    </div>
+                    <div class="grid grid-cols-1 w-[10rem] h-[7rem] border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Library</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[7rem] border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Timetable</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 w-[10rem] h-[7rem] border-2 border-cyan-600 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Statistics and overview</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     {% else %}
         <p class="text-center mt-[10rem]">You are not enrolled in a school yet</p>
     {% endif %}

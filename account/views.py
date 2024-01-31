@@ -8,8 +8,11 @@ from .forms import SignUpForm, AccountAuthenticationForm, SchoolForm
 # Create your views here.
 def index(request):
     user = request.user
+    posts = Post.objects.all()
     
-    context={}
+    context={
+        'posts': posts,
+    }
 
     if user.is_authenticated:
         getposts = Post.objects.filter(user=user)[:5] 
@@ -29,6 +32,15 @@ def index(request):
         elif user.accounttype == 'principal':
             profile = PrincipalProfile.objects.get(user=user)
             context['profile'] = profile
+            if profile.school:
+                school = profile.school
+                context["school"] = school
+        elif user.accounttype == 'student':
+            profile = StudentProfile.objects.get(user=user)
+            context['profile'] = profile
+            if profile.school:
+                school = profile.school
+                context["school"] = school
         else:
             pass
 
@@ -122,6 +134,24 @@ def studentsignup(request):
 
     return render(request, "studentsignup.html",context)
 
+def teachersignup(request):
+    user = request.user
+    context ={}
+
+    if user.is_authenticated:
+        return redirect("index")
+    else:
+        if request.POST:
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                TeacherProfile.objects.create(user=form.save())
+                form.save()
+                return redirect("login")
+            else:
+                context['registration_form'] = form
+
+    return render(request, "teachersignup.html",context)
+
 
 def signupDistricthead(request):
     user = request.user
@@ -196,40 +226,6 @@ def createschool(request):
                 context['schoolform'] = form
 
     return render(request, "createschool.html", context)
-
-def school(request):
-    user = request.user
-    context ={}
-
-    if user.is_authenticated:
-        if user.accounttype == 'principal':
-            profile = PrincipalProfile.objects.get(user=user)  
-            context['profile'] = profile          
-            if profile.school:
-                school = profile.school
-                context['school'] = school
-        elif user.accounttype == 'ministerOE':
-            profile = MinisterProfile.objects.get(user=user)  
-            context['profile'] = profile          
-            school = School.objects.filter(has_principal = False).order_by('-joined')
-            context['school'] = school
-        elif user.accounttype == 'commissioner':
-            profile = CommissionerProfile.objects.get(user=user)  
-            context['profile'] = profile          
-            school = School.objects.filter(has_principal = False, state=profile.state).order_by('-joined')
-            context['school'] = school
-        elif user.accounttype == 'student':
-            profile = StudentProfile.objects.get(user=user)  
-            context['profile'] = profile
-            if profile.school:
-                school = profile.school
-                context['school'] = school
-        else:
-            return redirect("index")
-    else:
-        return redirect("index")
-    
-    return render(request, "school.html", context)
 
 def schoolprofile(request, pk):
     user = request.user

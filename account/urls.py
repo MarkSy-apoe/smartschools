@@ -15,7 +15,6 @@ urlpatterns = [
     path('state-district/', views.signupStatedistrict, name='state-district'),
     path('fedral-district/', views.signupFeddistrict, name='fedral-district'),
     path('manage-comissioners/', views.managecommissioner, name='manage-comissioners'),
-    path('school/', views.school, name='school'),
     path('create-school/', views.createschool, name='create-school'),
     path('school-profile/<str:pk>', views.schoolprofile, name='schoolprofile'),
 ]
