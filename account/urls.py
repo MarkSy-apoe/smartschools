@@ -11,6 +11,7 @@ urlpatterns = [
     path('commisioner-join/', views.signupCommisioner, name='commisioner-join'),
     path('principal-join/', views.principalsignup, name='principal-join'),
     path('student-join/', views.studentsignup, name='student-join'),
+    path('teacher-join/', views.teachersignup, name='teacher-join'),
     path('district-join/', views.signupDistricthead, name='district-join'),
     path('state-district/', views.signupStatedistrict, name='state-district'),
     path('fedral-district/', views.signupFeddistrict, name='fedral-district'),

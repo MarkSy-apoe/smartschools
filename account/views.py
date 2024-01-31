@@ -41,6 +41,12 @@ def index(request):
             if profile.school:
                 school = profile.school
                 context["school"] = school
+        elif user.accounttype == 'teacher':
+            profile = TeacherProfile.objects.get(user=user)
+            context['profile'] = profile
+            if profile.school:
+                school = profile.school
+                context["school"] = school
         else:
             pass
 

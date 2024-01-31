@@ -8,7 +8,7 @@
         <a href="{% url 'principal-join' %}"><button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>School owner/Principal</p></button></a>
         <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>School admin</p></button>
         <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Government Staff</p></button>
-        <button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Teacher</p></button>
+        <a href="{% url 'teacher-join' %}"><button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Teacher</p></button></a>
         <a href="{% url 'student-join' %}"><button class="border-2 border-cyan-600 h-12 w-[15rem] text-lg hover:bg-cyan-600 hover:text-white rounded-md"><p>Student</p></button></a>
     </div>
 {% endblock %}
