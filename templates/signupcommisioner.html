@@ -1,45 +1,88 @@
-{% extends 'base.html' %}
 
-{% block content %}
-    <p class="text-center text-xl">Sign up as Commisioner and wait for minister approval</p><br>
+{% load static %}
+<!DOCTYPE html> 
+<html lang="en"> 
 
-    <div class="flex justify-center">
-        <form method="POST" class="mt-4">{% csrf_token %}
-            <label>First name: </label><br>
-            <input type="text" name="first_name" placeholder="e.g john" required class="border border-black mt-2 p-4"><br><br>
-            <label>Last name: </label><br>
-            <input type="text" name="last_name" placeholder="e.g doe" required class="border border-black mt-2 p-4"><br><br>
-            <label>Username: </label><br>
-            <input type="text" name="username" placeholder="your unique tag" required class="border border-black mt-2 p-4"><br><br>
-            <label>Email: </label><br>
-            <input type="email" name="email" placeholder="e.g johndoe@example.com" required class="border border-black mt-2 p-4"><br><br>
-            <label>Password: </label><br>
-            <input type="password" name="password1" placeholder="password" required class="border border-black mt-2 p-4"><br><br>
-            <label>Confirm password: </label><br>
-            <input type="password" name="password2" placeholder="confirm password" required class="border border-black mt-2 p-4"><br><br>
-            <label>State: </label><br>
-            <section name="state" required class="border border-black mt-2 p-4">
-                <option value="lagos">Lagos</option>
-                <option value="abuja">Abuja</option>
-            </section><br><br>
-            <input type="hidden" name="accounttype" value="commissioner">
+<head> 
+	<meta charset="UTF-8"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<meta name="viewport" content= 
+		"width=device-width, initial-scale=1.0"> 
+	<title>SmartSchools</title> 
+    <script src="https://cdn.tailwindcss.com"></script>
+	
 
-            {% for field in registration_form %}
-                <p>
-                {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                {% endfor %}
-                </p>
-            {% endfor %}
-                            
-            {% if registration_form.non_field_errors %}
-                <div style="color: red">
-                    <p>{{registration_form.non_field_errors}}</p>
-                </div>
-            {% endif %}
-            <br><br>
+	
+	<!--<link rel="stylesheet"
+		href="{% static 'src/output.css' %}"> -->
+	
+</head>
+<body class="bg-[url({% static 'img/office.avif' %})] h-full bg-no-repeat bg-top bg-cover mt-8">
+    <div class="w-full h-full bg-gray-700 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 absolute top-0">
 
-            <button type="submit" class="border-2 border-cyan-600 px-8 py-1 text-lg hover:bg-cyan-600 hover:text-white">Register</button>
-        </form>
-    </div><br>
-{% endblock %}
+        <div class="flex ml-[10rem]">
+
+            <div>
+                <p class="text-center text-xl text-gray-200 font-bold">Sign up as Commisioner and wait for minister approval</p><br>
+
+                <div class="text-gray-200">
+                    <form method="POST" class="mt-4">{% csrf_token %}
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="font-bold">First name: </label><br>
+                                <input type="text" name="first_name" placeholder="First name" required class="border border-black mt-2 p-4 text-black">
+                            </div>
+                            <div>
+                                <label class="font-bold">Last name: </label><br>
+                                <input type="text" name="last_name" placeholder="Last name" required class="border border-black mt-2 p-4 text-black">
+                            </div>
+                        </div><br>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="font-bold">Username: </label><br>
+                                <input type="text" name="username" placeholder="your unique tag" required class="border border-black mt-2 p-4 text-black">
+                            </div>
+                            <div>
+                                <label class="font-bold">Email: </label><br>
+                                <input type="email" name="email" placeholder="e.g email@example.com" required class="border border-black mt-2 p-4 text-black">
+                            </div>
+                        </div><br>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                            <label class="font-bold">Password: </label><br>
+                            <input type="password" name="password1" placeholder="password" required class="border border-black mt-2 p-4 text-black">
+                            </div>
+                            <div>
+                            <label class="font-bold">Confirm password: </label><br>
+                            <input type="password" name="password2" placeholder="confirm password" required class="border border-black mt-2 p-4 text-black">
+                            </div>
+                        </div><br>
+                        <label class="font-bold">State: </label><br>
+                        <select name="state" required class="border border-black mt-2 p-2 text-black">
+                            <option value="lagos">Lagos</option>
+                            <option value="abuja">Abuja</option>
+                        </select><br><br>
+                        <input type="hidden" name="accounttype" value="commissioner">
+
+                        {% for field in registration_form %}
+                            <p>
+                            {% for error in field.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                            </p>
+                        {% endfor %}
+                                        
+                        {% if registration_form.non_field_errors %}
+                            <div style="color: red">
+                                <p>{{registration_form.non_field_errors}}</p>
+                            </div>
+                        {% endif %}
+                        <br>
+
+                        <button type="submit" class="px-8 py-1 text-lg bg-cyan-600 hover:bg-cyan-900 text-white">Register</button>
+                    </form>
+                    <a href="{% url 'get-started' %}"><button class="px-8 py-1 text-lg bg-white text-black hover:bg-gray-400 mt-4">Back</button></a>
+                </div><br>
+            </div>
+        </div>
+    </div>

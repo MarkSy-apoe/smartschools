@@ -1,201 +1,68 @@
+
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    {% if user.is_authenticated %}                  
+    {% if user.is_authenticated %}
         {% if user.accounttype == 'ministerOE' %}
-            <div class="grid grid-cols-5 gap-8">
-            <div class="h-[23rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
-
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Check Office</p></button>                                       
-    
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Commisioners</p></button>
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Fedral District Heads</p></button>
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Schools</p></button>              
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
-            </div>
-            <div class="col-span-2 justify-items-center">
-                <div class="py-2 bg-white">
-                    <p class="text-lg mt-4 text-center">Welcome Minister, {{user.first_name}} {{user.last_name}}</p>
-                    <div class="mt-8 flex flex-row justify-center">
-                        <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
-                        <button class="rounded-md h-12 px-4 ml-6 border border-gray-400 hover:bg-cyan-600 hover:text-white">Post</button>
-                    </div>
-                </div><br>
-
-                {% for post in posts %}
-                    <div class="py-2 bg-white">
-                        <div class="grid grid-cols-3 gap-4">
-                            <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
-                            <div class="col-start-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-8 justify-items-center bg-[url({% static 'img/lineup.jpg' %})] bg-center bg-no-repeat bg-cover -mt-8 -mr-6 -ml-6">
+                <div class="h-[22rem] mt-8 ml-6 mr-6 w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center col-span-3 md:col-span-2 lg:col-span-1">
+                    <button class="w-full h-12 bg-cyan-600 text-white"><p>Newsfeed</p></button>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Prepare and edit syllabus</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Create/approve educational syllabus for schools for the session.</p>
                             </div>
                         </div>
-                        <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
-                        <p class="mt-8 ml-6">{{post.content}}</p>
-                        <div class="w-full bg-gray-400 h-px mt-4"></div>
-                        <div class="grid grid-cols-3 justify-items-center mt-2">
-                            <button>Like</button>
-                            <button>Comment</button>
-                            <button>Share</button>
-                        </div>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
-                <p class="text-lg text-center mt-8">Admin Tools</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
-                    <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                    <p class="text-center group-hover:animate-bounce">See management history</p>
-                    </div>
-                    </a>
-
-                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Send office notice</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Policies</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Your Profile</p>
-                    </div>
-                </div>
-
-                <p class="mt-12 text-lg">Office Meta:</p>
-                <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
-                    <div class="grid grid-cols-2 gap-12">
-                        <p>Staff Count:</p>
-                        <p>0</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-12">
-                        <p>Commisioner Count:</p>
-                        <p>0</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-12">
-                        <p>District head count:</p>
-                        <p>0</p>
-                    </div>
-                </div><br>
-            </div>                
-            </div>
-        {% elif user.accounttype == 'commissioner' %}
-            <div class="grid grid-cols-5 gap-8">
-            <div class="h-[23rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
-
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Check Office</p></button>                                       
-    
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage State District Heads</p></button>
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage State Schools</p></button>           
-                <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
-            </div>
-            <div class="col-span-2 justify-items-center">
-                <div class="py-2 bg-white">
-                    <p class="text-lg mt-4 text-center">Welcome {{profile.state}}  State Commisioner, {{user.first_name}} {{user.last_name}}</p>
-                    <div class="mt-8 flex flex-row justify-center">
-                        <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
-                        <button class="rounded-md h-12 px-4 ml-6 border border-gray-400 hover:bg-cyan-600 hover:text-white">Post</button>
-                    </div>
-                </div><br>
-
-                {% for post in posts %}
-                    <div class="py-2 bg-white">
-                        <div class="grid grid-cols-3 gap-4">
-                            <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
-                            <div class="col-start-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Send broadcast</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Send important information to your office or to the public.</p>
                             </div>
                         </div>
-                        <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
-                        <p class="mt-8 ml-6">{{post.content}}</p>
-                        <div class="w-full bg-gray-400 h-px mt-4"></div>
-                        <div class="grid grid-cols-3 justify-items-center mt-2">
-                            <button>Like</button>
-                            <button>Comment</button>
-                            <button>Share</button>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Commisioners</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Approve or Remove commisioners of education for diffrerent state.</p>
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
-                <p class="text-lg text-center mt-8">Admin Tools</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
-                    <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                    <p class="text-center group-hover:animate-bounce">See management history</p>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Fedral District Heads</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Approve or Remove fedral district heads.</p>
+                            </div>
+                        </div>
                     </div>
-                    </a>
-
-                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Send office notice</p>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Schools</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Approve Schools for studying, waec accredition and more. Create or suspend schools as well.</p>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Policies</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
-                        <p class="text-center group-hover:animate-bounce">Your Profile</p>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Having an issue? contact our customer support and get everything resolved.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <p class="mt-12 text-lg">Office Meta:</p>
-                <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
-                    <div class="grid grid-cols-2 gap-12">
-                        <p>Staff Count:</p>
-                        <p>0</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-12">
-                        <p>Commisioner Count:</p>
-                        <p>0</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-12">
-                        <p>District head count:</p>
-                        <p>0</p>
-                    </div>
-                </div><br>
-            </div>                
-            </div>
-        {% elif user.accounttype == 'fedraldistrict' %}
-            <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
-        {% elif user.accounttype == 'statedistrict' %}
-            <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
-        {% elif user.accounttype == 'officestaff' %}
-            <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
-        {% elif user.accounttype == 'principal' %}
-            <div class="grid grid-cols-5 gap-8">
-                <div class="h-[35rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
-
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Check applications</p></button>                                       
-                
-                    {% if school.schoolLvl == 'uni' or school.schoolLvl == 'poly' %}
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Courses</p></button>
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Departments</p></button>
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Merge Departments and Courses</p></button>
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Lecturers</p></button>
-                    {% else %}  
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Class</p></button>
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Subjects</p></button> 
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Merge Classes and Subjects</p></button> 
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Assign Teachers</p></button>
-                    {% endif %}                  
-                    
-
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Promotion/Demotion</p></button>
-
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Student grades</p></button>
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>View Parents</p></button>
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
-                </div>
-                <div class="col-span-2 justify-items-center">
+                <div class="col-span-3 mt-8 ml-6 mr-6 justify-items-center lg:col-span-2 w-full">
                     <div class="py-2 bg-white">
-                        <p class="text-2xl text-center">{{school.name}}</p>
-                        <p class="text-lg mt-4 text-center">Welcome Principal, {{user.first_name}} {{user.last_name}}</p>
+                        <p class="text-lg mt-4 text-center">Welcome Minister, {{user.first_name}} {{user.last_name}}</p>
                         <div class="mt-8 flex flex-row justify-center">
                             <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
-                            <button class="rounded-md h-12 px-4 ml-6 border border-gray-400 hover:bg-cyan-600 hover:text-white">Post</button>
+                            <button class="rounded-md h-12 px-4 ml-6 hover:bg-cyan-900 bg-cyan-600 text-white">Post</button>
                         </div>
                     </div><br>
 
@@ -218,28 +85,304 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
+                <div class="col-span-3 mt-8 ml-6 mr-6 md:col-span-5 justify-items-center hidden md:inline grid grid-cols-1 w-full bg-white h-[42rem] lg:col-span-2">
+                    <p class="text-lg text-center mt-8">Admin Tools</p>
+                    <div class="grid grid-cols-2 mt-6 gap-4 justify-items-center">
+                        <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Upload<br>profile picture</p>
+                        </div>
+                        </a>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Private chat</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Educational policies</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Edit Profile</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-12 text-lg text-center">Office Meta:</p>
+                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-full gap-4 mt-2 justify-items-center">
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Staff Count:</p>
+                            <p>0</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Commisioner Count:</p>
+                            <p>0</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>District head count:</p>
+                            <p>0</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Number of schools:</p>
+                            <p>0</p>
+                        </div>
+                    </div><br>
+                </div>
+            </div>
+        {% elif user.accounttype == 'commissioner' %}
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-8 justify-items-center bg-[url({% static 'img/lineup.jpg' %})] bg-center bg-no-repeat bg-cover -mt-8 -mr-6 -ml-6">
+                <div class="h-[20rem] w-full left-0 mt-8 ml-6 mr-6 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center col-span-3 md:col-span-2 lg:col-span-1">
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
+
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Check Office</p></button>
+
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage State District Heads</p></button>
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage State Schools</p></button>
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
+                </div>
+                <div class="col-span-3 mt-8 ml-6 mr-6 justify-items-center lg:col-span-2 w-full">
+                    <div class="py-2 bg-white">
+                        <p class="text-lg mt-4 text-center">Welcome {{profile.state}}  State Commisioner, {{user.first_name}} {{user.last_name}}</p>
+                        <div class="mt-8 flex flex-row justify-center">
+                            <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
+                            <button class="rounded-md h-12 px-4 ml-6 hover:bg-cyan-900 bg-cyan-600 text-white">Post</button>
+                        </div>
+                    </div><br>
+
+                    {% for post in posts %}
+                        <div class="py-2 bg-white">
+                            <div class="grid grid-cols-3 gap-4">
+                                <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
+                                <div class="col-start-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                                </div>
+                            </div>
+                            <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
+                            <p class="mt-8 ml-6">{{post.content}}</p>
+                            <div class="w-full bg-gray-400 h-px mt-4"></div>
+                            <div class="grid grid-cols-3 justify-items-center mt-2">
+                                <button>Like</button>
+                                <button>Comment</button>
+                                <button>Share</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-span-3 mt-8 ml-6 mr-6 md:col-span-5 justify-items-center hidden md:inline grid grid-cols-1 w-full bg-white h-[42rem] lg:col-span-2">
+                    <p class="text-lg text-center mt-8">Admin Tools</p>
+                    <div class="grid grid-cols-2 mt-6 gap-4">
+                        <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">See management history</p>
+                        </div>
+                        </a>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Send office notice</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Policies</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                            <p class="text-center group-hover:animate-bounce">Your Profile</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-12 text-lg text-center">Office Meta:</p>
+                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-full gap-4 mt-2 justify-items-center">
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Staff Count:</p>
+                            <p>0</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>Commisioner Count:</p>
+                            <p>0</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-12">
+                            <p>District head count:</p>
+                            <p>0</p>
+                        </div>
+                    </div><br>
+                </div>
+            </div>
+        {% elif user.accounttype == 'fedraldistrict' %}
+            <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'statedistrict' %}
+            <p class="text-xl mt-4">Welcome District Head, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'officestaff' %}
+            <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
+        {% elif user.accounttype == 'principal' %}
+
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-8 justify-items-center bg-[url({% static 'img/lineup.jpg' %})] bg-center bg-no-repeat bg-cover -mt-8 -mr-6 -ml-6">
+                <div class="h-[35rem] mt-8 ml-6 mr-6 w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center col-span-3 md:col-span-2 lg:col-span-1">
+                    <div class="group w-full">
+                        <button class="w-full h-12 bg-cyan-600 text-white"><p>Newsfeed</p></button>
+                    </div>
+
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Send Broadcast</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>This allows you to share newsletters, school notice and important educational information to students, parents, teachers, and non-teachers independently or to all of them at once.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if school.schoolLvl == 'uni' or school.schoolLvl == 'poly' %}
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Courses</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to set up/register school's courses. As well as edit or deleter them</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Department</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to setup/register school's departments. As well as edit and delete them</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Merge Departments and Courses</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to assign courses to several departments</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Assign Lecturers</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to Assign lecturers to courses.</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Subjects</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to set up/register school's subjects. As well as edit or deleter them</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Manage Classes</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to setup/register school's classes according to your school structure. As well as edit and delete them e.g SS1b or SS1 orange</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Merge Classes and Subjects</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to assign subjects to several classes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Assign Teachers</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>This allows you to assign teachers to subjects. A teacher can be assigned to multiple classes and subjects</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Promotion/Demotion</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Promote or demote students after the session exams. You can also set the school's cut off grade. This allows the promotion/demotion to be automated by our systems</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Student's Grades</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>View all students records and continous assessment. Simplify record keeping and have all your student's neccesary data</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>View Parents</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>This allows you to know your student's gaurdians/parents.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact Support</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Having an issue? contact our customer support and get everything resolved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-3 mt-8 ml-6 mr-6 justify-items-center lg:col-span-2 w-full">
+                    <div class="py-2 bg-white">
+                        <p class="text-2xl text-center">{{school.name}}</p>
+                        <p class="text-lg mt-4 text-center">Welcome, {{user.first_name}} {{user.last_name}}</p>
+                        <p class="mt-2 text-center text-gray-700 text-sm">Signed in as principal</p>
+                        <div class="mt-8 flex flex-row justify-center">
+                            <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
+                            <button class="rounded-md h-12 px-4 ml-6 hover:bg-cyan-900 bg-cyan-600 text-white">Post</button>
+                        </div>
+                    </div><br>
+
+                    {% for post in posts %}
+                        <div class="py-2 bg-white">
+                            <div class="grid grid-cols-3 gap-4">
+                                <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
+                                <div class="col-start-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-8"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                                </div>
+                            </div>
+                            <p class="ml-6 text-gray-700 text-sm">{% if post.user.accounttype == 'ministerOE' %} Minister of education {% endif %}</p>
+                            <p class="mt-8 ml-6">{{post.content}}</p>
+                            <div class="w-full bg-gray-400 h-px mt-4"></div>
+                            <div class="grid grid-cols-3 justify-items-center mt-2">
+                                <button>Like</button>
+                                <button>Comment</button>
+                                <button>Share</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-span-3 mt-8 ml-6 mr-6 md:col-span-5 justify-items-center hidden md:inline grid grid-cols-1 w-full bg-white h-[42rem] lg:col-span-2">
+                    {% if profile.school %}
                     <p class="text-lg text-center mt-2">Your School's reputation:</p>
                     {% if school.is_approved %}
-                        <p class="text-green-700 mt-2">Your school has been approved</p>
+                        <p class="text-green-700 text-center mt-2">Your school has been approved</p>
                     {% else %}
-                        <p class="text-red-700 mt-2">Your school hasn't been approved, <a href="#" class="underline">apply here</a></p>
+                        <p class="text-red-700 text-center mt-2">Your school hasn't been approved, <a href="#" class="underline">apply here</a></p>
                     {% endif %}
                     {% if school.schoolLvl == 'secondary' or school.schoolLvl == 'juniorseconadary' or school.schoolLvl == 'seniorsecondary' %}
                         {% if school.is_waecaccredited %}
-                            <p class="text-green-700 mt-2">Your school is waec accredited</p>
+                            <p class="text-green-700 text-center mt-2">Your school is waec accredited</p>
                         {% else %}
-                            <p class="text-red-700 mt-2">Your school is not waec accredited, <a href="#" class="underline">apply here</a></p>
+                            <p class="text-red-700 text-center mt-2">Your school is not waec accredited, <a href="#" class="underline">apply here</a></p>
                         {% endif %}
                     {% endif %}
                     {% if school.is_suspended %}
-                        <p class="text-red-700 mt-2">Your school has been suspended, <a href="#" class="underline">Learn more</a></p>
+                        <p class="text-red-700 text-center mt-2">Your school has been suspended, <a href="#" class="underline">Learn more</a></p>
                     {% else %}
-                        <p class="text-green-700 mt-2">Your school is not suspended</p>
+                        <p class="text-green-700 text-center mt-2">Your school is not suspended</p>
+                    {% endif %}
                     {% endif %}
 
                     <p class="text-lg text-center mt-8">Admin Tools</p>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
+                    <div class="grid grid-cols-2 mt-6 gap-4 justify-items-center">
+                        {% if profile.school %}
                         <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
                         <p class="text-center group-hover:animate-bounce">Manage Students</p>
                         </div>
@@ -256,10 +399,16 @@
                         <div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
                             <p class="text-center group-hover:animate-bounce">Your School's Profile</p>
                         </div>
+                        {% else %}
+                        <a href="{% url 'create-school' %}"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
+                        <p class="text-center group-hover:animate-bounce">Create School</p>
+                        </div>
+                        </a>
+                        {% endif %}
                     </div>
 
-                    <p class="mt-12 text-lg">School's Meta:</p>
-                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
+                    <p class="mt-12 text-lg text-center">School</p>
+                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-full gap-4 mt-2 justify-items-center">
                         <div class="grid grid-cols-2 gap-12">
                             <p>Mission:</p>
                             <p>{{school.mission}}</p>
@@ -277,41 +426,117 @@
                             <p>50</p>
                         </div>
                     </div><br>
-                </div>                
+                </div>
             </div>
         {% elif user.accounttype == 'schooladmin' %}
             <p class="text-xl mt-4">Welcome, {{user.first_name}} {{user.last_name}}</p>
         {% elif user.accounttype == 'teacher' %}
-            <div class="grid grid-cols-5 gap-8">
-                <div class="h-[35rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-8 justify-items-center bg-[url({% static 'img/lineup.jpg' %})] bg-center bg-no-repeat bg-cover -mt-8 -mr-6 -ml-6">
+                <div class="h-[35rem] mt-8 ml-6 mr-6 w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center col-span-3 md:col-span-2 lg:col-span-1">
+                    <button class="w-full h-12 bg-cyan-600 text-white"><p>Newsfeed</p></button>
 
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Edit Letter</p></button> 
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Send Broadcast to students</p></button>
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Edit Broadcast to students</p></button>  
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Start Live Class</p></button>  
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Send Lectures & Assignments</p></button>             
-                
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Edit Letter</p></button>
+                        <!--20rem width. noleft or top . 16.7remml-->
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Edit cover letters and upload your CV/Resume to have your job seeking documents ready to apply at any school</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Send broadcast to students</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Send important information to a class you teach.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Edit sent broadcasts</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Edit or delete sent broadcasts</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Start Live Class</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Create a live session class. A group video call with interactive features</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Send Lectures and assignments</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>This allows you to share lecture materials in form of; video, audio, texts, files, images and texts. It also encourages studying further for the next topics.</p>
+                            </div>
+                        </div>
+                    </div>
                     {% if school.schoolLvl == 'uni' or school.schoolLvl == 'poly' %}
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>View Courses and Years</p></button>
-                    {% else %}  
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>View Classes and Subjects</p></button>
-                    {% endif %}                  
-                    
+                        <div class="group w-full">
+                            <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>View courses and years</p></button>
+                            <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                                <div class="bg-cyan-600 p-6 text-white">
+                                    <p>An organized view of the courses you take and the levels/years they are for</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>View Subjects and Classes</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>An organized view of the subjects you take and the classes they are for</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
 
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Search Employment</p></button>
-
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Record Student grades</p></button>
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Message Students</p></button>
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact support</p></button>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Search Employment</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Send in your applications with your CV and cover letter to schools seeking employment.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Record Students Grades</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>You can grade students for the subjects you take.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Messages from students</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>A great way to respond to students individually.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group w-full">
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Contact Support</p></button>
+                        <div class="absolute left-0 top-72 ml-[18.3rem] -mt-[3rem] w-[31rem] text-lg hidden lg:group-hover:flex justify-center items-center">
+                            <div class="bg-cyan-600 p-6 text-white">
+                                <p>Having an issue? contact our customer support and get everything resolved.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-span-2 justify-items-center">
+                <div class="col-span-3 mt-8 ml-6 mr-6 justify-items-center lg:col-span-2 w-full">
                     <div class="py-2 bg-white">
                         <p class="text-2xl text-center">{{school.name}}</p>
-                        <p class="text-lg mt-4 text-center">Welcome Teacher, {{user.first_name}} {{user.last_name}}</p>
+                        <p class="text-lg mt-4 text-center">Welcome, {{user.first_name}} {{user.last_name}}</p>
+                        <p class="mt-2 text-center text-gray-700 text-sm">Signed in as teacher</p>
                         <div class="mt-8 flex flex-row justify-center">
                             <textarea class="w-4/6 h-12 rounded-md border border-black p-2" placeholder="Make a post"></textarea>
-                            <button class="rounded-md h-12 px-4 ml-6 border border-gray-400 hover:bg-cyan-600 hover:text-white">Post</button>
+                            <button class="rounded-md h-12 px-4 ml-6 hover:bg-cyan-900 bg-cyan-600 text-white">Post</button>
                         </div>
                     </div><br>
 
@@ -334,9 +559,9 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
+                <div class="col-span-3 mt-8 ml-6 mr-6 md:col-span-5 justify-items-center hidden md:inline grid grid-cols-1 w-full bg-white h-[42rem] lg:col-span-2">
                     <p class="text-lg text-center mt-8">Teacher Tools</p>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
+                    <div class="grid grid-cols-2 mt-6 gap-4 justify-items-center">
                         <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
                         <p class="text-center group-hover:animate-bounce">Grade Students</p>
                         </div>
@@ -355,8 +580,8 @@
                         </div>
                     </div>
 
-                    <p class="mt-12 text-lg">Classes Meta:</p>
-                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
+                    <p class="mt-12 text-lg text-center">Classes:</p>
+                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-full gap-4 mt-2 justify-items-center">
                         <div class="grid grid-cols-2 gap-12">
                             <p>Total Students:</p>
                             <p>100</p>
@@ -374,36 +599,36 @@
                             <p>1</p>
                         </div>
                     </div><br>
-                </div>                
+                </div>
             </div>
         {% elif user.accounttype == 'student' %}
-            <div class="grid grid-cols-5 gap-8">
-                <div class="h-[20rem] w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center">
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Newsfeed</p></button>
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-8 justify-items-center bg-[url({% static 'img/lineup.jpg' %})] bg-center bg-no-repeat bg-cover -mt-8 -mr-6 -ml-6">
+                <div class="h-[20rem] mt-8 ml-6 mr-6 w-full left-0 bg-slate-700 rounded-md bg-white grid grid-cols-1 justify-items-center col-span-3 md:col-span-2 lg:col-span-1">
+                    <button class="w-full h-12 bg-cyan-600 text-white"><p>Newsfeed</p></button>
 
-                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Timetable</p></button>                                       
-                   
+                    <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Timetable</p></button>
+
                     {% if school.schoolLvl == 'uni' or school.schoolLvl == 'poly' %}
                         <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My Department</p></button>
                         <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My courses</p></button>
-                    {% else %}  
+                    {% else %}
                         <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My Class</p></button>
-                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My subjects</p></button>  
-                    {% endif %}                  
-                    
+                        <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>My subjects</p></button>
+                    {% endif %}
+
 
                     <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Library</p></button>
 
                     <button class="w-full h-12 hover:bg-cyan-600 hover:text-white"><p>Results</p></button>
                 </div>
-                <div class="col-span-2 justify-items-center">
-                    <div class="py-2 bg-white">
+                <div class="col-span-3 mt-8 ml-6 mr-6 justify-items-center lg:col-span-2 w-full">
+                    <div class="py-2 bg-white w-full">
                         <p class="text-2xl text-center">{{school.name}}</p>
                         <p class="text-lg mt-4 text-center">Welcome Student, {{user.first_name}} {{user.last_name}}</p>
                     </div><br>
 
                     {% for post in posts %}
-                        <div class="py-2 bg-white">
+                        <div class="py-2 bg-white w-full">
                             <div class="grid grid-cols-3 gap-4">
                                 <p class="ml-6">{{post.user.first_name}} {{post.user.last_name}}</p>
                                 <div class="col-start-3">
@@ -421,10 +646,10 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="col-span-2 justify-items-center grid grid-cols-1 bg-white h-[42rem]">
+                <div class="col-span-3 mt-8 ml-6 mr-6 md:col-span-5 justify-items-center hidden md:inline grid grid-cols-1 w-full bg-white h-[42rem] lg:col-span-2">
                     <p class="text-lg text-center mt-2">Your Avg grade: 90%</p>
                     <p class="text-lg text-center mt-8">Student Tools</p>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-4">
+                    <div class="grid grid-cols-2 mt-6 gap-4">
                         <a href="#"><div class="grid grid-cols-1 w-[10rem] h-[5rem] bg-gray-200 hover:bg-cyan-600 hover:text-white items-center cursor-pointer group rounded-md">
                         <p class="text-center group-hover:animate-bounce">View your grade</p>
                         </div>
@@ -443,8 +668,8 @@
                         </div>
                     </div>
 
-                    <p class="mt-12 text-lg">Today's classes:</p>
-                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-5/6 gap-4 mt-2 justify-items-center">
+                    <p class="mt-12 text-lg text-center">Today's classes:</p>
+                    <div class="grid grid-cols-1 border border-gray-400 py-4 w-full gap-4 mt-2 justify-items-center">
                         <div class="grid grid-cols-2 gap-12">
                             <p>Mathematics</p>
                             <p>By 8:00am</p>
@@ -462,13 +687,33 @@
                             <p>By 10:30am</p>
                         </div>
                     </div><br>
-                </div>                
+                </div>
             </div>
-            
+
         {% else %}
             <p class="text-xl mt-4">Unknown accountype</p>
-        {% endif %} <br> 
+        {% endif %} <br>
     {% else %}
-        <p>landing page</p>
+        <div class="bg-[url({% static 'img/lineup.jpg' %})] bg-center bg-no-repeat bg-cover -mt-8 -mr-6 -ml-6">
+            <div class="h-full w-[60%] sm:w-[60%] bg-gray-700 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10">
+                <p class="uppercase text-[1.8rem] sm:text-8xl font-semibold text-sky-700">The<br> Next<br> Generation<br> Learning<br> Environment.</p>
+            </div>
+        </div> 
+        <p class="text-center text-2xl mt-4 font-bold tracking-wider text-red-600">Changing the face of education through technology</p> 
+        <div class="grid grid-cols-3 mt-4 gap-8">
+            <div class="h-[15rem] w-full border border-gray-400 rounded-md">
+                <p class="text-center text-xl mt-8">Service 1</p>
+                <p class="mt-4 text-center">This is a service card</p>
+            </div>
+            <div class="h-[15rem] w-full border border-gray-400 rounded-md">
+                <p class="text-center text-xl mt-8">Service 2</p>
+                <p class="mt-4 text-center">This is a service card</p>
+            </div>
+            <div class="h-[15rem] w-full border border-gray-400 rounded-md">
+                <p class="text-center text-xl mt-8">Service 3</p>
+                <p class="mt-4 text-center">This is a service card</p>
+            </div>
+        </div>
+            
     {% endif %}
 {% endblock %}
